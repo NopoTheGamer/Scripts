@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+DIR="$HOME/notes"
+usage() { cat <<- EOF
+Usage:
+-n Pick the file name
+-N Make new file
+-d Pick the DIR used
+-D Make the DIR supplied in -d
+-e Edit a file. Needs -n
+-s Edits /note
+-S Shows /note
+EOF
+}
+[ -f "$DIR"/note ] || { touch "$DIR"/note; echo "Notes:" >> "$DIR"/note; }
+
+if [[ "$1" == "" ]]; then
+	usage
+else
+while getopts n:d:e:Nd:s:S flag;do
+	case "$flag" in
+	n) filename="$OPTARG";;
+	d) DIR="$HOME/notes/$OPTARG";;
+        D) dirchanged="1";;
+	e) text="$OPTARG";;
+	N) runnew="1";;
+	s) simple="$OPTARG";;
+	S) cat "$DIR"/note;;
+	*) usage;;
+esac
+done
+fi
+if [[ "$dirchanged" == "1" ]]; then
+	mkdir "$DIR"
+	#touch "$DIR"/"$2"/"$3"
+fi
+if [[ "$runnew" == "1" ]]; then
+	touch "$DIR"/"$filename"
+elif [[ "$simple" != "" ]]; then
+	echo "$simple" >> "$DIR"/note
+elif [[ "$filename" != "" && "$text" != "" ]]; then
+	echo "$text" >> "$DIR"/"$filename"
+fi
