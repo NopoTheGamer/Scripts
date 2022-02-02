@@ -32,7 +32,6 @@ done
 fi
 if [[ "$dirchanged" == "1" ]]; then
 	mkdir "$DIR"
-	#touch "$DIR"/"$2"/"$3"
 fi
 if [[ "$runnew" == "1" ]]; then
 	touch "$DIR"/"$filename"
