@@ -1,4 +1,4 @@
 # Scripts
 
-i made a note app that works ig
-its kinda clunky but it works
+You can take a screenshot with blur
+this took me too long
