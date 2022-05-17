@@ -5,7 +5,7 @@ import time
 import schedule
 
 token = ''
-with open('/home/nopo/scripts/git/token.txt', 'r') as file:
+with open('/home/nopo/scripts/git/token.txt', 'r') as file: # put token in file and change the path
     token = file.read().rstrip()
 token = "token " + token
 prnumbers = []
@@ -14,6 +14,7 @@ headers = ''
 username = 'NopoTheGamer'
 
 def getOpenPrs(URL):
+    headers = {'Authorization': token, 'accept': 'application/vnd.github.v3+json'}
     r = requests.get(URL, headers=headers)
     data = r.json()
     for x in range(len(data)):
@@ -26,6 +27,7 @@ def getOpenPrs(URL):
 
 
 def getApprovedprs(URL, headers):
+    headers = {'Authorization': token, 'accept': 'application/vnd.github.v3+json'}
     r = requests.get(URL, headers=headers)
     data = r.json()
     for x in range(len(data)):
@@ -33,6 +35,7 @@ def getApprovedprs(URL, headers):
             return True
 
 def getOpenPrsRepo(URL):
+    headers = {'Authorization': token, 'accept': 'application/vnd.github.v3+json'}
     r = requests.get(URL, headers=headers)
     data = r.json()
     for x in range(len(data)):
@@ -45,6 +48,7 @@ def getOpenPrsRepo(URL):
 
 
 def getApprovedprsRepo(URL, headers):
+    headers = {'Authorization': token, 'accept': 'application/vnd.github.v3+json'}
     r = requests.get(URL, headers=headers)
     data = r.json()
     for x in range(len(data)):
@@ -53,7 +57,7 @@ def getApprovedprsRepo(URL, headers):
 
 
 def mainFunc(URL, URL2):
-    headers = {'Authorization': token, 'accept': 'application/vnd.github.v3+json'}
+    print("test")
     for x in range(len(prnumbers)):
         prnumbers.remove(prnumbers[x - 1])
     for x in range(len(prnumbers)):
@@ -67,3 +71,4 @@ while True:
     schedule.run_pending()
     number = len(prnumbers2) + len(prnumbers)
     print(number)
+    time.sleep(1860)
