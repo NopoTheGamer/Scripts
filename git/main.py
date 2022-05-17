@@ -28,7 +28,6 @@ def getOpenPrs(URL):
 def getApprovedprs(URL, headers):
     r = requests.get(URL, headers=headers)
     data = r.json()
-    # print(json.dumps(r.json(), sort_keys=True, indent=2))
     for x in range(len(data)):
         if data[x]["state"] == "APPROVED" and data[x]["user"]["login"] == username:
             return True
@@ -53,7 +52,6 @@ def getApprovedprsRepo(URL, headers):
             return True
 
 
-
 def mainFunc(URL, URL2):
     headers = {'Authorization': token, 'accept': 'application/vnd.github.v3+json'}
     for x in range(len(prnumbers)):
@@ -63,23 +61,9 @@ def mainFunc(URL, URL2):
     getOpenPrs(URL)
     getOpenPrsRepo(URL2)
 
-
-def func():
-    print("5th minute dink donk")
-    time.sleep(60)
-
-
-global counter
-counter = 1
 mainFunc("https://api.github.com/repos/notenoughupdates/notenoughupdates/pulls", "https://api.github.com/repos/notenoughupdates/notenoughupdates-repo/pulls")
-# print(len(prnumbers))
-# schedule.every(5).minutes.do(func)
-# schedule.every(5).minutes.do(getOpenPrs("https://moulberry.codes/lowestbin.json"))
 schedule.every(30).minutes.do(mainFunc, "https://api.github.com/repos/notenoughupdates/notenoughupdates/pulls", "https://api.github.com/repos/notenoughupdates/notenoughupdates-repo/pulls")
 while True:
-    # exit(0)
     schedule.run_pending()
-    # getOpenPrs("https://api.github.com/repos/notenoughupdates/notenoughupdates/pulls")
     number = len(prnumbers2) + len(prnumbers)
     print(number)
-# print()
