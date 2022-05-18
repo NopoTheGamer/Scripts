@@ -18,7 +18,7 @@ def getOpenPrs(URL):
     r = requests.get(URL, headers=headers)
     data = r.json()
     for x in range(len(data)):
-        if data[x]["draft"] is False:
+        if data[x]["draft"] is False and data[x]["user"]["login"] != username:
             z = data[x]["number"]
             prnumbers.append(z)
             if getApprovedprs(f"https://api.github.com/repos/notenoughupdates/notenoughupdates/pulls/{str(z)}/reviews",
@@ -40,7 +40,7 @@ def getOpenPrsRepo(URL):
     data = r.json()
     for x in range(len(data)):
         z = data[x]["number"]
-        if data[x]["draft"] is False and z != 660:
+        if data[x]["draft"] is False and z != 660 and data[x]["user"]["login"] != username:
             prnumbers2.append(z)
             if getApprovedprsRepo(f"https://api.github.com/repos/notenoughupdates/notenoughupdates-repo/pulls/{str(z)}/reviews",
                               headers):
@@ -60,7 +60,7 @@ def mainFunc(URL, URL2):
     print("test")
     for x in range(len(prnumbers)):
         prnumbers.remove(prnumbers[x - 1])
-    for x in range(len(prnumbers)):
+    for x in range(len(prnumbers2)):
         prnumbers2.remove(prnumbers2[x - 1])
     getOpenPrs(URL)
     getOpenPrsRepo(URL2)
